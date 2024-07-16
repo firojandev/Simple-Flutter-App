@@ -1,12 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_workflow/app/route/route_path.dart';
 import 'package:flutter_workflow/features/common/widgets/custom_app_bar.dart';
 import 'package:flutter_workflow/features/home/bloc/categories_bloc.dart';
 import 'package:flutter_workflow/features/home/bloc/categories_event.dart';
 import 'package:flutter_workflow/features/home/catgeories_view.dart';
 import 'package:flutter_workflow/features/home/widgets/category_card.dart';
 import 'package:go_router/go_router.dart';
+
+import '../common/widgets/custom_search_delegate.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -16,7 +19,25 @@ class HomeScreen extends StatelessWidget {
     return BlocProvider<CategoriesBloc>(
         create: (_) => CategoriesBloc()..add(CategoriesFetchEvent()),
         child: Scaffold(
-          appBar: CustomAppBar(title: "Home"),
+          appBar: CustomAppBar(
+            title: "Home",
+            searchbar: IconButton(
+              onPressed: () {
+                showSearch(context: context, delegate: CustomSearchDelegate());
+              },
+              icon: Icon(Icons.search),
+            ),
+            actions: [
+              IconButton(
+                icon: Icon(Icons.shopping_cart),
+                onPressed: () {
+                  context.goNamed(
+                    RoutePath.cart,
+                  );
+                },
+              ),
+            ],
+          ),
           body: SafeArea(
             child: Padding(
               padding: const EdgeInsets.all(8.0),

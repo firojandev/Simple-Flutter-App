@@ -1,4 +1,6 @@
+
 import 'package:flutter_workflow/app/route/route_path.dart';
+import 'package:flutter_workflow/features/cart/cart_screen.dart';
 import 'package:flutter_workflow/features/home/home_screen.dart';
 import 'package:flutter_workflow/features/prodcuts/product_screen.dart';
 import 'package:go_router/go_router.dart';
@@ -16,5 +18,10 @@ final router = GoRouter(initialLocation: RoutePath.home, routes: [
             category: state.pathParameters["category"] ?? "All",
           ),
         ),
-      ])
+      ]),
+  GoRoute(
+    path: RoutePath.cart,
+    name: RoutePath.cart,
+    builder: (context, state) => CartScreen(),
+  ),
 ]);
